@@ -46,6 +46,17 @@ class LetterBoxedSolver:
         self.selected_words.append(longest_word)
         return longest_word
 
+    def solve(self, starting_letter: str) -> List[str]:
+        word = starting_letter
+        num_words = 0
+        while num_words < 30 and not self.all_letters_are_used():
+            num_words += 1
+            next_word_first_letter = word[-1]
+            word = self.longest_word(next_word_first_letter)
+            print('\n' + ' -> '.join(self.selected_words))
+            print('Letters used: ' + self.all_letters_used())
+        return self.selected_words
+
     def all_letters_used(self) -> str:
         list_of_letters = list(self.letters_used)
         list_of_letters.sort()
@@ -54,12 +65,6 @@ class LetterBoxedSolver:
     def all_letters_are_used(self) -> bool:
         return len(self.letters_used) == len(self.letters)
 
-solver = LetterBoxedSolver('ryl pqf aeo bui')
-word = 'q'
-words = 0
-while words < 30 and not solver.all_letters_are_used():
-    next_word_first_letter = word[-1]
-    word = solver.longest_word(next_word_first_letter)
-    print(' -> '.join(solver.selected_words))
-    print('Letters used: ' + solver.all_letters_used())
-    words += 1
+if __name__ == '__main__':
+    solver = LetterBoxedSolver('ryl pqf aeo bui')
+    solver.solve('q')
