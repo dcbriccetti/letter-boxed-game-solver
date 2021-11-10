@@ -27,7 +27,7 @@ class Words:
         words = [word for word in all_words if word_works(word, paths)]
         print(f'{len(words):,} candidate words loaded from list of {len(all_words):,} words')
         self.words = [Word.create(word) for word in words]
-        self.words.sort(key=lambda ww: len(ww.unique_letters), reverse=True)
+        self.words.sort(key=lambda word: len(word.unique_letters), reverse=True)
 
     def best_words_for_needed_letters(self, needed_letters: set[str]) -> List[Word]:
         num_needed_letters_and_words: list[tuple[int, Word]] = [
