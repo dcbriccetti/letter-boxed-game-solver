@@ -1,5 +1,6 @@
-from random import choice, seed
+import random
 from typing import List, Set, Tuple
+from word import Word
 from words import Words
 
 
@@ -12,6 +13,13 @@ class LetterBoxedSolver:
         self.words = Words(letter_groups)
 
     def solve(self) -> WordSeq:
+        def randomly_choose_word(words: List[Word]) -> Word:
+            num_words_to_choose_from = 20
+            high = min(len(words), num_words_to_choose_from) - 1
+            mode = -1  # todo Why doesn’t 0 work? (Yields too few 0 values)
+            index = round(random.triangular(0, high, mode))
+            return words[index]
+
         letters_needed = set(self.letters)
         selected_words = []
         first_letter = None
@@ -19,14 +27,14 @@ class LetterBoxedSolver:
         while letters_needed:
             best_words = [word for word in self.words.best_words_for_needed_letters(letters_needed)
                           if not first_letter or word.text[0] == first_letter]
-            word = choice(best_words[:20])
+            word = randomly_choose_word(best_words)
             selected_words.append(word.text)
             letters_needed.difference_update(word.unique_letters)
             first_letter = word.text[-1]
         return selected_words
 
     def solve_multiple(self) -> None:
-        seed(1)  # Get consistent results despite randomness
+        random.seed(1)  # Get consistent results despite randomness
         runs = 1000
 
         unique_solutions: Set[Tuple[str]] = set(tuple(solver.solve()) for _ in range(runs))
