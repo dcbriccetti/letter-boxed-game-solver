@@ -1,9 +1,10 @@
 from random import choice, seed
-from typing import List
+from typing import List, Set, Tuple
 from words import Words
 
 class LetterBoxedSolver:
     def __init__(self, letter_groups: str) -> None:
+        print(f'{LetterBoxedSolver.__name__} is ready to solve "{letter_groups}"')
         self.letters = letter_groups.replace(' ', '')
         self.words = Words(letter_groups)
 
@@ -23,19 +24,16 @@ class LetterBoxedSolver:
 
     def solve_multiple(self) -> None:
         seed(1)  # Get consistent results despite randomness
-        runs = 100
+        runs = 1000
 
-        solutions: list[list[str]] = []
-        for n in range(runs):
-            if (solution := solver.solve()) not in solutions:
-                solutions.append(solution)
-
-        solutions.sort(key=lambda solution: len(''.join(solution)))  # Fewest letters is best
+        unique_solutions: Set[Tuple[str]] = set(tuple(solver.solve()) for n in range(runs))
+        solutions = [(len(''.join(s)), s) for s in unique_solutions]
+        solutions.sort()  # Fewest letters is best
 
         print(f'{len(solutions):,} unique solutions found in {runs:,} runs')
-        for solution in solutions[:10]:
+        for _, solution in solutions[:10]:
             print(' ➡️ '.join(solution))
 
 if __name__ == '__main__':
-    solver = LetterBoxedSolver('ryl pqf aeo bui')
+    solver = LetterBoxedSolver('upo xts eil ncy')
     solver.solve_multiple()
