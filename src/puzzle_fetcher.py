@@ -6,7 +6,8 @@ def fetch() -> str:
     response = requests.get('https://www.nytimes.com/puzzles/letter-boxed')
     soup = BeautifulSoup(response.text, 'html.parser')
     scripts = soup.find_all('script')
-    game_data_script = [script.text for script in scripts if script.text.startswith('window.gameData')][0]
+    game_data_script = [script.text for script in scripts
+                        if script.text.startswith('window.gameData')][0]
     search = '"sides":'
     sides_start = game_data_script.index(search) + len(search) + 1
     length = len('"ABC"') * 4 + len(',') * 3

@@ -38,7 +38,8 @@ class LetterBoxedSolver:
     def solve_multiple(self, num_runs) -> StrSeq:
         random.seed(1)  # Get consistent results despite randomness
 
-        unique_solutions: Set[Tuple[str]] = set(tuple(solver.solve()) for _ in range(num_runs))
+        unique_solutions: Set[Tuple[str]] = set(
+            tuple(solver.solve()) for _ in range(num_runs))
         lengths_and_solutions: list[tuple[int, tuple[str]]] = [
             (len(''.join(solution)), solution)
             for solution in unique_solutions]
