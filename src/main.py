@@ -21,7 +21,7 @@ class LetterBoxedSolver:
                           if not first_letter or word.text[0] == first_letter]
             word = choice(best_words[:20])
             selected_words.append(word.text)
-            letters_needed.difference_update(set(word.text))
+            letters_needed.difference_update(word.unique_letters)
             first_letter = word.text[-1]
         return selected_words
 
