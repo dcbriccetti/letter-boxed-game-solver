@@ -1,5 +1,7 @@
 import pathlib
-from typing import List, Dict
+from typing import Dict
+
+from app_types import WordSeq
 from word import Word
 
 class Words:
@@ -33,7 +35,7 @@ class Words:
         self.words = list(map(Word.create, candidate_words))
         self.words.sort(key=lambda word: word.num_unique_letters, reverse=True)
 
-    def best_words_for_needed_letters(self, needed_letters: set[str]) -> List[Word]:
+    def best_words_for_needed_letters(self, needed_letters: set[str]) -> WordSeq:
         def num_needed_letters(word: Word):
             return len(word.unique_letters.intersection(needed_letters))
 
