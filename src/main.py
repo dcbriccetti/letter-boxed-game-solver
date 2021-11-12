@@ -49,6 +49,6 @@ class LetterBoxedSolver:
         return solutions
 
 if __name__ == '__main__':
-    solver = LetterBoxedSolver('ari tkv csd uey')
+    solver = LetterBoxedSolver('ryl pqf aeo bui')
     solutions = solver.solve_multiple(100)
     print('\n'.join([' ➡️ '.join(solution) for solution in solutions[:10]]))
